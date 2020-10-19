@@ -4,7 +4,6 @@ import firebase from '../../firebase';
 import {
   Grid,
   Form,
-  Segment,
   Button,
   Header,
   Message,
@@ -116,14 +115,14 @@ class Register extends React.Component {
     } = this.state;
 
     return (
-      <Grid textAlign="center" verticalAlign="middle" className="app">
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h1" icon color="orange" textAlign="center">
-            <Icon name="signup" color="orange" />
-            Register for Healthcare App
-          </Header>
-          <Form onSubmit={this.handleSubmit} size="large">
-            <Segment stacked>
+      <div className="app">
+        <Grid textAlign="center" verticalAlign="middle" className="auth">
+          <Grid.Column style={{ maxWidth: 450 }}>
+            <Header as="h1" icon color="orange" textAlign="center">
+              <Icon name="signup" color="orange" />
+              Register
+            </Header>
+            <Form onSubmit={this.handleSubmit} size="large">
               <Form.Input
                 fluid
                 name="username"
@@ -176,17 +175,17 @@ class Register extends React.Component {
               >
                 Submit
               </Button>
-            </Segment>
-          </Form>
-          {errors.length > 0 && (
-            <Message error>
-              <h3>Error</h3>
-              {this.displayErrors(errors)}
-            </Message>
-          )}
-          <Message>Already a user? <Link to="/login">Login</Link></Message>
-        </Grid.Column>
-      </Grid>
+            </Form>
+            {errors.length > 0 && (
+              <Message error>
+                <h3>Error</h3>
+                {this.displayErrors(errors)}
+              </Message>
+            )}
+            <Message>Already a user? <Link to="/login">Login</Link></Message>
+          </Grid.Column>
+        </Grid>
+      </div>
     )
   }
 }
