@@ -15,3 +15,11 @@ export const clearUser = () => {
     type: actionTypes.CLEAR_USER
   }
 };
+
+/* Sidebar Actions */
+export const setVisible = visible => {
+  return {
+    type: actionTypes.SET_SIDEBAR,
+    payload: { visible: visible }
+  }
+};

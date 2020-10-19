@@ -23,8 +23,26 @@ const user_reducer = (state = initialUserState, action) => {
   }
 };
 
+const initialSidebarState = {
+  visible: false
+};
+
+/* Sidebar Actions */
+const sidebar_reducer = (state = initialSidebarState, action) => {
+  switch(action.type) {
+    case actionTypes.SET_SIDEBAR:
+      return {
+        ...state,
+        visible: action.payload.visible
+      }
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
-  user: user_reducer
+  user: user_reducer,
+  sidebar: sidebar_reducer
 });
 
 export default rootReducer;
