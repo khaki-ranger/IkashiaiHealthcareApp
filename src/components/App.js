@@ -6,6 +6,7 @@ import './App.css';
 
 import NavigationPanel from './NavigationPanel';
 import InputPanel from './InputPanel';
+import ChartPanel from './ChartPanel';
 
 const App = ({ currentUser, visible, setVisible }) => (
   <Sidebar.Pushable as={Segment}>
@@ -37,6 +38,7 @@ const App = ({ currentUser, visible, setVisible }) => (
       <div className="app">
         <NavigationPanel user={currentUser} />
         <InputPanel />
+        <ChartPanel />
       </div>
     </Sidebar.Pusher>
   </Sidebar.Pushable>
