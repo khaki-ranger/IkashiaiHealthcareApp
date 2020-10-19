@@ -1,5 +1,16 @@
 import * as actionTypes from './types';
 
+
+/* Date Actions */
+export const setCurrentDate = currentDate => {
+  return {
+    type: actionTypes.SET_CURRENT_DATETIME,
+    payload: {
+      currentDate: currentDate
+    }
+  }
+};
+
 /* User Actions */
 export const setUser = user => {
   return {

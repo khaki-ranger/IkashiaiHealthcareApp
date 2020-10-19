@@ -1,6 +1,24 @@
 import { combineReducers } from 'redux';
 import * as actionTypes from '../actions/types';
 
+/* Date Reducer */
+const initialDateState = {
+  currentDate: null,
+};
+
+const date_reducer = (state = initialDateState, action) => {
+  switch(action.type) {
+    case actionTypes.SET_CURRENT_DATETIME :
+      return {
+        ...state,
+        currentDate: action.payload.currentDate,
+      }
+    default:
+      return state;
+  }
+};
+
+/* User Reducer */
 const initialUserState = {
   currentUser: null,
   isLoading: true
@@ -23,11 +41,11 @@ const user_reducer = (state = initialUserState, action) => {
   }
 };
 
+/* Sidebar Reducer */
 const initialSidebarState = {
   visible: false
 };
 
-/* Sidebar Actions */
 const sidebar_reducer = (state = initialSidebarState, action) => {
   switch(action.type) {
     case actionTypes.SET_SIDEBAR:
@@ -41,6 +59,7 @@ const sidebar_reducer = (state = initialSidebarState, action) => {
 };
 
 const rootReducer = combineReducers({
+  date: date_reducer,
   user: user_reducer,
   sidebar: sidebar_reducer
 });

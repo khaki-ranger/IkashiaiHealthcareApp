@@ -1,4 +1,7 @@
 import React from 'react';
+import Moment from 'react-moment';
+import 'moment/locale/ja';
+import { connect } from 'react-redux';
 import {
   Header,
   Segment,
@@ -6,51 +9,64 @@ import {
   Grid
 } from 'semantic-ui-react'
 
-const InputPanel = () => (
-  <Segment.Group>
-    <Segment inverted color='red' size='large' textAlign='center'>
-      <Header>2020.10.18 (日)</Header>
-    </Segment>
-    <Segment secondary>
-      <Grid  columns='equal' verticalAlign='middle'>
-        <Grid.Column width={1}>
-          <Icon name='check' />
-        </Grid.Column>
-        <Grid.Column>
-          <Header>体重</Header>
-        </Grid.Column>
-        <Grid.Column textAlign='right'>
-          <Header>64.8kg</Header>
-        </Grid.Column>
-      </Grid>
-    </Segment>
-    <Segment>
-      <Grid  columns='equal' verticalAlign='middle'>
-        <Grid.Column width={1}>
-          <Icon name='square outline' />
-        </Grid.Column>
-        <Grid.Column>
-          <Header>体温</Header>
-        </Grid.Column>
-        <Grid.Column textAlign='right'>
-          <Header></Header>
-        </Grid.Column>
-      </Grid>
-    </Segment>
-    <Segment>
-      <Grid  columns='equal' verticalAlign='middle'>
-        <Grid.Column width={1}>
-          <Icon name='square outline' />
-        </Grid.Column>
-        <Grid.Column>
-          <Header>排便</Header>
-        </Grid.Column>
-        <Grid.Column textAlign='right'>
-          <Header></Header>
-        </Grid.Column>
-      </Grid>
-    </Segment>
-  </Segment.Group>
-)
+const InputPanel = ({ currentDate }) => {
 
-export default InputPanel;
+  return(
+    <Segment.Group>
+      <Segment inverted color='red' size='large' textAlign='center'>
+        <Header>
+          <Moment locale='ja' format='YYYY.MM.DD (ddd)'>
+            {currentDate}
+          </Moment>
+        </Header>
+      </Segment>
+      <Segment secondary>
+        <Grid  columns='equal' verticalAlign='middle'>
+          <Grid.Column width={1}>
+            <Icon name='check' />
+          </Grid.Column>
+          <Grid.Column>
+            <Header>体重</Header>
+          </Grid.Column>
+          <Grid.Column textAlign='right'>
+            <Header>64.8kg</Header>
+          </Grid.Column>
+        </Grid>
+      </Segment>
+      <Segment>
+        <Grid  columns='equal' verticalAlign='middle'>
+          <Grid.Column width={1}>
+            <Icon name='square outline' />
+          </Grid.Column>
+          <Grid.Column>
+            <Header>体温</Header>
+          </Grid.Column>
+          <Grid.Column textAlign='right'>
+            <Header></Header>
+          </Grid.Column>
+        </Grid>
+      </Segment>
+      <Segment>
+        <Grid  columns='equal' verticalAlign='middle'>
+          <Grid.Column width={1}>
+            <Icon name='square outline' />
+          </Grid.Column>
+          <Grid.Column>
+            <Header>排便</Header>
+          </Grid.Column>
+          <Grid.Column textAlign='right'>
+            <Header></Header>
+          </Grid.Column>
+        </Grid>
+      </Segment>
+    </Segment.Group>
+  )
+};
+
+const mapStateToProps = state => ({
+  currentDate: state.date.currentDate,
+});
+
+export default connect(
+  mapStateToProps
+)(InputPanel );
