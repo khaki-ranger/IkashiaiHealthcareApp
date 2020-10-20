@@ -10,19 +10,33 @@ import {
   Button
 } from 'semantic-ui-react'
 
-class Element  extends React.Component {
+class Element extends React.Component {
   state = {
     modal: false,
     weight: '',
     temperature: '',
     defecation: false
-  }
+  };
+
+  updateRecord = ({ type, value }) => {
+    const newRecord = {
+      [type]: value
+    };
+
+    console.log('newRecord', newRecord);
+    this.closeModal();
+  };
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log('this.state', this.state);
-    this.closeModal();
-  }
+
+    const type = this.props.type;
+    const value = this.state[type];
+
+    if (value !== '') {
+      this.updateRecord({ type, value });
+    }
+  };
 
   handleChange = event => {
     const { name } = event.target;
@@ -100,7 +114,7 @@ class Element  extends React.Component {
           </Modal.Content>
           <Modal.Actions>
             <Button color="green" inverted onClick={this.handleSubmit}>
-              <Icon name="checkmark" /> Add
+              <Icon name="checkmark" /> Update
             </Button>
             <Button color="red" inverted onClick={this.closeModal}>
               <Icon name="remove" /> Cancel

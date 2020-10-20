@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setVisible, setCurrentDate } from '../actions';
-import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
+import { setCurrentDate } from '../actions';
 import './App.css';
 
 import NavigationPanel from './NavigationPanel';
@@ -16,52 +15,23 @@ class App extends React.Component {
   }
   
   render() {
-    const { currentUser, visible, setVisible } = this.props;
+    const { currentUser } = this.props;
 
     return (
-      <Sidebar.Pushable as={Segment}>
-        <Sidebar
-          as={Menu}
-          animation='push'
-          icon='labeled'
-          inverted
-          onHide={() => setVisible(false)}
-          vertical
-          visible={visible}
-          width='thin'
-        >
-          <Menu.Item as='a'>
-            <Icon name='home' />
-            Home
-          </Menu.Item>
-          <Menu.Item as='a'>
-            <Icon name='gamepad' />
-            Games
-          </Menu.Item>
-          <Menu.Item as='a'>
-            <Icon name='camera' />
-            Channels
-          </Menu.Item>
-        </Sidebar>
-
-        <Sidebar.Pusher dimmed={visible}>
-          <div className="app">
-            <NavigationPanel user={currentUser} />
-            <InputPanel />
-            <ChartPanel />
-          </div>
-        </Sidebar.Pusher>
-      </Sidebar.Pushable>
+      <div className="app">
+        <NavigationPanel user={currentUser} />
+        <InputPanel />
+        <ChartPanel />
+      </div>
     )
   }
 };
 
 const mapStateToProps = state => ({
   currentUser: state.user.currentUser,
-  visible: state.sidebar.visible
 });
 
 export default connect(
   mapStateToProps,
-  { setVisible, setCurrentDate }
+  { setCurrentDate }
 )(App);
