@@ -5,7 +5,7 @@ import './App.css';
 
 import NavigationPanel from './NavigationPanel';
 import InputPanel from './InputPanel';
-import ChartPanel from './ChartPanel';
+import TabPanel from './TabPanel';
 
 class App extends React.Component {
 
@@ -21,7 +21,7 @@ class App extends React.Component {
       <div className="app">
         <NavigationPanel user={currentUser} />
         <InputPanel />
-        <ChartPanel />
+        <TabPanel />
       </div>
     )
   }

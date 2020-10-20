@@ -6,8 +6,8 @@ html,
 body,
 #root,
 .app,
-.auth{
-  height: 100%;
+.auth {
+  height: 100vh;
   background-color: #FFF8E1;
 }
 .app {
@@ -15,4 +15,30 @@ body,
 }
 .navigation__panel {
   padding-top: 1rem;
+}
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: table;;
+}
+.tabbar>div {
+  display: table-cell;
+  width: 50%;
+  vertical-align: bottom;
+  padding: 8px 0;
+  text-align: center;
+  font-weight: bold;
+  background-color: #ddd;
+}
+.tabbar>div.active {
+  background-color: #333;
+  color: white;
+}
+.tabbar>div>.title {
+  font-size: .9rem;
+}
+.tabbar>div>.icon-box {
+  margin-bottom: 5px;
 }
