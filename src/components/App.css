@@ -30,7 +30,6 @@ body,
 }
 .tabbar>div {
   display: table-cell;
-  width: 50%;
   vertical-align: bottom;
   padding: 8px 0;
   text-align: center;

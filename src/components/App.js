@@ -6,6 +6,7 @@ import './App.css';
 import TabPanel from './TabPanel';
 import InputPanel from './InputPanel';
 import RecordPanel from './RecordPanel';
+import MypagePanel from './MypagePanel';
 
 class App extends React.Component {
 
@@ -20,6 +21,8 @@ class App extends React.Component {
         return <InputPanel />
       case 'record':
         return <RecordPanel  />
+      case 'mypage':
+        return <MypagePanel  />
       default:
         return null
     }
