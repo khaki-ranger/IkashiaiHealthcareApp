@@ -27,10 +27,10 @@ export const clearUser = () => {
   }
 };
 
-/* Sidebar Actions */
-export const setVisible = visible => {
+/* Tab Actions */
+export const selectTab = selected => {
   return {
-    type: actionTypes.SET_SIDEBAR,
-    payload: { visible: visible }
+    type: actionTypes.SELECT_TAB ,
+    payload: { selected: selected }
   }
 };

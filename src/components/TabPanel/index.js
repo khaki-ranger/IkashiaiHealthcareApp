@@ -1,25 +1,19 @@
 import React from 'react'
-import { Icon } from 'semantic-ui-react'
+import Element from './Element';
 
-const TabPanelElement = ({ active, title, icon }) => (
-  <div className={ active ? 'active': '' }>
-    <div className='icon-box'>
-      <Icon name={icon} size='large' />
-    </div>
-    <div className='title'>{title}</div>
+const TabPanel = () => (
+  <div className='tabbar'>
+    <Element
+      type='input'
+      title='入力'
+      icon='check'
+    />
+    <Element
+      type='record'
+      title='記録'
+      icon='chart area'
+    />
   </div>
 );
 
-class TabPanel extends React.Component {
-
-  render() {
-    return (
-      <div className='tabbar'>
-        <TabPanelElement active={true} title='入力' icon='check' />
-        <TabPanelElement active={false} title='記録' icon='chart area' />
-      </div>
-    )
-  }
-};
-
-export default TabPanel;
+export default TabPanel ;

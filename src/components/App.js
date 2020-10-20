@@ -4,8 +4,9 @@ import { setCurrentDate } from '../actions';
 import './App.css';
 
 import NavigationPanel from './NavigationPanel';
-import InputPanel from './InputPanel';
 import TabPanel from './TabPanel';
+import InputPanel from './InputPanel';
+import ChartPanel from './ChartPanel';
 
 class App extends React.Component {
 
@@ -13,6 +14,17 @@ class App extends React.Component {
     const now = new Date();
     this.props.setCurrentDate(now);
   }
+
+  displayMainPanel = () => {
+    switch(this.props.selectedTab) {
+      case 'input':
+        return <InputPanel />
+      case 'record':
+        return <ChartPanel  />
+      default:
+        return null
+    }
+  };
   
   render() {
     const { currentUser } = this.props;
@@ -20,7 +32,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <NavigationPanel user={currentUser} />
-        <InputPanel />
+        {this.displayMainPanel()}
         <TabPanel />
       </div>
     )
@@ -29,6 +41,7 @@ class App extends React.Component {
 
 const mapStateToProps = state => ({
   currentUser: state.user.currentUser,
+  selectedTab: state.tab.selected
 });
 
 export default connect(

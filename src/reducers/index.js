@@ -41,17 +41,17 @@ const user_reducer = (state = initialUserState, action) => {
   }
 };
 
-/* Sidebar Reducer */
-const initialSidebarState = {
-  visible: false
+/* tab Reducer */
+const initialTabState = {
+  selected: 'input'
 };
 
-const sidebar_reducer = (state = initialSidebarState, action) => {
+const tab_reducer = (state = initialTabState, action) => {
   switch(action.type) {
-    case actionTypes.SET_SIDEBAR:
+    case actionTypes.SELECT_TAB :
       return {
         ...state,
-        visible: action.payload.visible
+        selected: action.payload.selected
       }
     default:
       return state;
@@ -61,7 +61,7 @@ const sidebar_reducer = (state = initialSidebarState, action) => {
 const rootReducer = combineReducers({
   date: date_reducer,
   user: user_reducer,
-  sidebar: sidebar_reducer
+  tab: tab_reducer
 });
 
 export default rootReducer;
