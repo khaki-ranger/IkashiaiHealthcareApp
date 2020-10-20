@@ -4,63 +4,66 @@ import 'moment/locale/ja';
 import { connect } from 'react-redux';
 import {
   Header,
-  Segment,
-  Icon,
-  Grid
+  Segment
 } from 'semantic-ui-react'
 
-const InputPanel = ({ currentDate }) => {
+import Element from './Element';
 
-  return(
-    <Segment.Group>
-      <Segment inverted color='red' size='large' textAlign='center'>
-        <Header>
-          <Moment locale='ja' format='YYYY.MM.DD (ddd)'>
-            {currentDate}
-          </Moment>
-        </Header>
-      </Segment>
-      <Segment secondary>
-        <Grid  columns='equal' verticalAlign='middle'>
-          <Grid.Column width={1}>
-            <Icon name='check' />
-          </Grid.Column>
-          <Grid.Column>
-            <Header>体重</Header>
-          </Grid.Column>
-          <Grid.Column textAlign='right'>
-            <Header>64.8kg</Header>
-          </Grid.Column>
-        </Grid>
-      </Segment>
-      <Segment>
-        <Grid  columns='equal' verticalAlign='middle'>
-          <Grid.Column width={1}>
-            <Icon name='square outline' />
-          </Grid.Column>
-          <Grid.Column>
-            <Header>体温</Header>
-          </Grid.Column>
-          <Grid.Column textAlign='right'>
-            <Header></Header>
-          </Grid.Column>
-        </Grid>
-      </Segment>
-      <Segment>
-        <Grid  columns='equal' verticalAlign='middle'>
-          <Grid.Column width={1}>
-            <Icon name='square outline' />
-          </Grid.Column>
-          <Grid.Column>
-            <Header>排便</Header>
-          </Grid.Column>
-          <Grid.Column textAlign='right'>
-            <Header></Header>
-          </Grid.Column>
-        </Grid>
-      </Segment>
-    </Segment.Group>
+const elements = [
+  {
+    isDone: true,
+    type: 'weight',
+    title: '体重',
+    value: '64.8',
+    unit: 'kg'
+  },
+  {
+    isDone: false,
+    type: 'temperature',
+    title: '体温',
+    value: '',
+    unit: '度'
+  },
+  {
+    isDone: false,
+    type: 'defecation',
+    title: '排便',
+    value: '',
+    unit: ''
+  }
+];
+
+class InputPanel  extends React.Component {
+
+  displayElements = elements => (
+    elements.length > 0 && elements.map((element, index) => (
+      <Element
+        key={index}
+        type={element.type}
+        isDone={element.isDone}
+        title={element.title}
+        value={element.value}
+        unit={element.unit}
+      />
+    ))
   )
+
+  render() {
+    const { currentDate } = this.props;
+
+    return(
+      <Segment.Group>
+        <Segment inverted color='red' size='large' textAlign='center'>
+          <Header>
+            <Moment locale='ja' format='YYYY.MM.DD (ddd)'>
+              {currentDate}
+            </Moment>
+          </Header>
+        </Segment>
+        {this.displayElements(elements)}
+      </Segment.Group>
+    )
+  }
 };
 
 const mapStateToProps = state => ({
