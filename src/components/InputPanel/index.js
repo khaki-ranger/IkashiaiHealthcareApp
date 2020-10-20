@@ -1,12 +1,9 @@
 import React from 'react';
-import Moment from 'react-moment';
-import 'moment/locale/ja';
-import { connect } from 'react-redux';
 import {
-  Header,
   Segment
 } from 'semantic-ui-react'
 
+import DateController from './DateController';
 import Element from './Element';
 
 const elements = [
@@ -49,27 +46,15 @@ class InputPanel  extends React.Component {
   )
 
   render() {
-    const { currentDate } = this.props;
-
     return(
-      <Segment.Group>
-        <Segment inverted color='red' size='large' textAlign='center'>
-          <Header>
-            <Moment locale='ja' format='YYYY.MM.DD (ddd)'>
-              {currentDate}
-            </Moment>
-          </Header>
-        </Segment>
-        {this.displayElements(elements)}
-      </Segment.Group>
+      <div>
+        <DateController />
+        <Segment.Group>
+          {this.displayElements(elements)}
+        </Segment.Group>
+      </div>
     )
   }
 };
 
-const mapStateToProps = state => ({
-  currentDate: state.date.currentDate,
-});
-
-export default connect(
-  mapStateToProps
-)(InputPanel );
+export default InputPanel;
