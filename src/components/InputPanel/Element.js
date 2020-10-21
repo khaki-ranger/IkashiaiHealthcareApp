@@ -74,6 +74,7 @@ class Element extends React.Component {
               label={unit}
               labelPosition='right'
               name={type}
+              value={value}
               onChange={this.handleChange}
             />
           </Form.Field>

@@ -7,28 +7,11 @@ import {
 import DateController from './DateController';
 import Element from './Element';
 import DATA_SET from '../../data/test';
-
-const elements = [
-  {
-    type: 'weight',
-    title: '体重',
-    unit: 'kg'
-  },
-  {
-    type: 'temperature',
-    title: '体温',
-    unit: '度'
-  },
-  {
-    type: 'defecation',
-    title: '排便',
-    unit: ''
-  }
-];
+import types from '../../config/types';
 
 class InputPanel extends React.Component {
 
-  displayElements = elements => {
+  displayElements = types => {
 
     const { currentDate } = this.props;
     const date = new Date(currentDate);
@@ -47,7 +30,7 @@ class InputPanel extends React.Component {
     }
 
     return (
-      elements.length > 0 && elements.map((element, index) => (
+      types.length > 0 && types.map((element, index) => (
         <Element
           key={index}
           type={element.type}
@@ -64,7 +47,7 @@ class InputPanel extends React.Component {
       <div>
         <DateController />
         <Segment.Group>
-          {this.displayElements(elements)}
+          {this.displayElements(types)}
         </Segment.Group>
       </div>
     )
