@@ -84,17 +84,24 @@ class Element extends React.Component {
 
   render() {
     const { modal } = this.state;
-    const { isDone, type, title, value, unit } = this.props;
+    const { type, title, unit } = this.props;
+    let { value } = this.props;
+
+    if (type === 'defecation') {
+      if (value !== '') {
+        value = value ? 'あり' : 'なし';
+      }
+    }
     
     return(
-      <Segment style={{ backgroundColor: isDone ? '#eee' : '#fff' }}>
+      <Segment style={{ backgroundColor: value !== '' ? '#eee' : '#fff' }}>
         <Grid
           columns='equal'
           verticalAlign='middle'
           onClick={this.openModal}
         >
           <Grid.Column width={1}>
-            <Icon name={ isDone ? 'check' : 'square outline' } />
+            <Icon name={ value !== '' ? 'check' : 'square outline' } />
           </Grid.Column>
           <Grid.Column>
             <Header>{title}</Header>

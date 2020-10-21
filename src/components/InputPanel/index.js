@@ -1,49 +1,63 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   Segment
 } from 'semantic-ui-react'
 
 import DateController from './DateController';
 import Element from './Element';
+import DATA_SET from '../../data/test';
 
 const elements = [
   {
-    isDone: true,
     type: 'weight',
     title: '体重',
-    value: '64.8',
     unit: 'kg'
   },
   {
-    isDone: false,
     type: 'temperature',
     title: '体温',
-    value: '',
     unit: '度'
   },
   {
-    isDone: false,
     type: 'defecation',
     title: '排便',
-    value: '',
     unit: ''
   }
 ];
 
-class InputPanel  extends React.Component {
+class InputPanel extends React.Component {
 
-  displayElements = elements => (
-    elements.length > 0 && elements.map((element, index) => (
-      <Element
-        key={index}
-        type={element.type}
-        isDone={element.isDone}
-        title={element.title}
-        value={element.value}
-        unit={element.unit}
-      />
-    ))
-  )
+  displayElements = elements => {
+
+    const { currentDate } = this.props;
+    const date = new Date(currentDate);
+    const year = String(date.getFullYear());
+    const month = String(date.getMonth() + 1);
+    const day = String(date.getDate());
+    const key = Number(year + month + day);
+    let data = DATA_SET.get(key);
+
+    if (!data) {
+      data = {
+        weight: '',
+        temperature: '',
+        defecation: ''
+      };
+    }
+
+    return (
+      elements.length > 0 && elements.map((element, index) => (
+        <Element
+          key={index}
+          type={element.type}
+          title={element.title}
+          unit={element.unit}
+          value={data[element.type]}
+        />
+      ))
+    )
+  }
 
   render() {
     return(
@@ -57,4 +71,10 @@ class InputPanel  extends React.Component {
   }
 };
 
-export default InputPanel;
+const mapStateToProps = state => ({
+  currentDate: state.date.currentDate,
+});
+
+export default connect(
+  mapStateToProps,
+)(InputPanel);
