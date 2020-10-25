@@ -1,4 +1,6 @@
 import React from 'react';
+import firebase from '../../firebase';
+import { connect } from 'react-redux';
 import {
   Header,
   Segment,
@@ -12,19 +14,49 @@ import {
 
 class Element extends React.Component {
   state = {
+    user: this.props.currentUser,
+    value: '',
     modal: false,
     weight: '',
     temperature: '',
-    defecation: false
+    defecation: false,
+    loading: false
   };
 
+  getDateKey = () => {
+    const date = new Date(this.props.currentDate);
+    const year = String(date.getFullYear());
+    const month = String(date.getMonth() + 1);
+    const day = String(date.getDate());
+    const key = year + month + day;
+
+    return key;
+  }
+
   updateRecord = ({ type, value }) => {
-    const newRecord = {
+    const { currentUser } = this.props;
+    const updates = {
       [type]: value
     };
 
-    console.log('newRecord', newRecord);
-    this.closeModal();
+    if (updates) {
+      this.setState({ loading: true });
+      
+      firebase.database().ref('records')
+        .child(currentUser.uid)
+        .child(this.getDateKey())
+        .update(updates)
+        .then(() => {
+          console.log('updated');
+          this.setState({ loading: false, value: '' });
+          this.closeModal();
+        })
+        .catch(err => {
+          console.error(err);
+          this.setState({ loading: false });
+          this.closeModal();
+        });
+    }
   };
 
   handleSubmit = event => {
@@ -44,12 +76,12 @@ class Element extends React.Component {
     if (name === 'defecation') {
       value = (event.target.value === 'true');
     }
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, value: value });
   };
 
-  openModal = () => this.setState({ modal: true });
+  openModal = () => this.setState({ modal: true, value: this.props.value });
 
-  closeModal = () => this.setState({ modal: false });
+  closeModal = () => this.setState({ modal: false, value: '' });
 
   displayForm = ({ type, value, unit }) => {
     if (type === 'defecation') {
@@ -74,7 +106,7 @@ class Element extends React.Component {
               label={unit}
               labelPosition='right'
               name={type}
-              value={value}
+              value={this.state.value}
               onChange={this.handleChange}
             />
           </Form.Field>
@@ -93,7 +125,7 @@ class Element extends React.Component {
         value = value ? 'あり' : 'なし';
       }
     }
-    
+
     return(
       <Segment style={{ backgroundColor: value !== '' ? '#eee' : '#fff' }}>
         <Grid
@@ -134,4 +166,11 @@ class Element extends React.Component {
   }
 };
 
-export default Element
+const mapStateToProps = state => ({
+  currentUser: state.user.currentUser,
+  currentDate: state.date.currentDate
+});
+
+export default connect(
+  mapStateToProps
+)(Element);
