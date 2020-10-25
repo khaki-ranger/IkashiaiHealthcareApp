@@ -6,6 +6,7 @@ import {
 
 import DateController from './DateController';
 import Element from './Element';
+import Informations from './Informations';
 import types from '../../config/types';
 
 class InputPanel extends React.Component {
@@ -48,6 +49,7 @@ class InputPanel extends React.Component {
     return(
       <div>
         <DateController />
+        <Informations />
         <Segment.Group>
           {this.displayElements(types)}
         </Segment.Group>
