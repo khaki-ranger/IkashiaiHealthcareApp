@@ -11,18 +11,20 @@ import types from '../../config/types';
 
 class InputPanel extends React.Component {
 
-  displayElements = types => {
-    const { currentDate, records, isLoading } = this.props;
-
-    if (isLoading) return null;
-    console.log('records.entries', records.entries);
-
-    const date = new Date(currentDate);
+  getDateKey = () => {
+    const date = new Date(this.props.currentDate);
     const year = String(date.getFullYear());
     const month = String(date.getMonth() + 1);
     const day = String(date.getDate());
     const key = year + month + day;
-    let data = records.get(key);
+
+    return key;
+  }
+
+  displayElements = types => {
+    const { records } = this.props;
+
+    let data = records.get(this.getDateKey());
 
     if (!data) {
       data = {
@@ -46,12 +48,18 @@ class InputPanel extends React.Component {
   }
 
   render() {
+    const { isLoading } = this.props;
+
     return(
       <div>
         <DateController />
         <Informations />
         <Segment.Group>
-          {this.displayElements(types)}
+          {
+            isLoading ? 
+              null : 
+              this.displayElements(types)
+          }
         </Segment.Group>
       </div>
     )

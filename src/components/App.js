@@ -23,12 +23,11 @@ class App extends React.Component {
   }
 
   addRecordListener = userId => {
-    const loadedRecords = new Map();
     const ref = this.state.recordsRef;
-    ref.child(userId).on('child_added', snap => {
+    ref.child(userId).on('value', snap => {
       if (snap.val() !== null) {
-        loadedRecords.set(snap.key, snap.val());
-        this.props.setRecords(loadedRecords);
+        const records = new Map(Object.entries(snap.val()));
+        this.props.setRecords(records);
       }
     });
   };
