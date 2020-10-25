@@ -1,13 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  Segment
+  Segment,
+  Placeholder
 } from 'semantic-ui-react'
 
 import DateController from './DateController';
 import Element from './Element';
 import Informations from './Informations';
 import types from '../../config/types';
+
+const IsLoadingSegment = () => (
+  <React.Fragment>
+    { types.map((element, index) => (
+        <Segment key={index}>
+          <Placeholder>
+            <Placeholder.Line />
+          </Placeholder>
+        </Segment>
+      ))
+    }
+  </React.Fragment>
+)
 
 class InputPanel extends React.Component {
 
@@ -57,7 +71,7 @@ class InputPanel extends React.Component {
         <Segment.Group>
           {
             isLoading ? 
-              null : 
+              <IsLoadingSegment /> : 
               this.displayElements(types)
           }
         </Segment.Group>
