@@ -6,20 +6,22 @@ import {
 
 import DateController from './DateController';
 import Element from './Element';
-import DATA_SET from '../../data/test';
 import types from '../../config/types';
 
 class InputPanel extends React.Component {
 
   displayElements = types => {
+    const { currentDate, records, isLoading } = this.props;
 
-    const { currentDate } = this.props;
+    if (isLoading) return null;
+    console.log('records.entries', records.entries);
+
     const date = new Date(currentDate);
     const year = String(date.getFullYear());
     const month = String(date.getMonth() + 1);
     const day = String(date.getDate());
-    const key = Number(year + month + day);
-    let data = DATA_SET.get(key);
+    const key = year + month + day;
+    let data = records.get(key);
 
     if (!data) {
       data = {
@@ -56,6 +58,8 @@ class InputPanel extends React.Component {
 
 const mapStateToProps = state => ({
   currentDate: state.date.currentDate,
+  records: state.record.records,
+  isLoading: state.record.isLoading
 });
 
 export default connect(

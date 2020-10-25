@@ -41,14 +41,14 @@ const user_reducer = (state = initialUserState, action) => {
   }
 };
 
-/* tab Reducer */
+/* Tab Reducer */
 const initialTabState = {
   selected: 'input'
 };
 
 const tab_reducer = (state = initialTabState, action) => {
   switch(action.type) {
-    case actionTypes.SELECT_TAB :
+    case actionTypes.SELECT_TAB:
       return {
         ...state,
         selected: action.payload.selected
@@ -58,10 +58,30 @@ const tab_reducer = (state = initialTabState, action) => {
   }
 };
 
+/* Record Reducer */
+const initialRecordState = {
+  records: new Map(),
+  isLoading: true
+};
+
+const record_reducer = (state = initialRecordState, action) => {
+  switch(action.type) {
+    case actionTypes.SET_RECORDS:
+      return {
+        ...state,
+        isLoading: false,
+        records: action.payload.records
+      }
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   date: date_reducer,
   user: user_reducer,
-  tab: tab_reducer
+  tab: tab_reducer,
+  record: record_reducer
 });
 
 export default rootReducer;

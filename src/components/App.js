@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setCurrentDate } from '../actions';
+import firebase from '../firebase';
+import { setCurrentDate, setRecords } from '../actions';
 import './App.css';
 
 import TabPanel from './TabPanel';
@@ -9,11 +10,28 @@ import RecordPanel from './RecordPanel';
 import MypagePanel from './MypagePanel';
 
 class App extends React.Component {
+  state = {
+    user: this.props.currentUser,
+    recordsRef: firebase.database().ref('records'),
+  }
 
   componentDidMount() {
+    const { user } = this.state;
     const now = new Date();
     this.props.setCurrentDate(now);
+    this.addRecordListener(user.uid);
   }
+
+  addRecordListener = userId => {
+    const loadedRecords = new Map();
+    const ref = this.state.recordsRef;
+    ref.child(userId).on('child_added', snap => {
+      if (snap.val() !== null) {
+        loadedRecords.set(snap.key, snap.val());
+        this.props.setRecords(loadedRecords);
+      }
+    });
+  };
 
   displayMainPanel = () => {
     switch(this.props.selectedTab) {
@@ -39,10 +57,11 @@ class App extends React.Component {
 };
 
 const mapStateToProps = state => ({
+  currentUser: state.user.currentUser,
   selectedTab: state.tab.selected
 });
 
 export default connect(
   mapStateToProps,
-  { setCurrentDate }
+  { setCurrentDate, setRecords }
 )(App);

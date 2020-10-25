@@ -7,3 +7,6 @@ export const CLEAR_USER = 'CLEAR_USER';
 
 /* Tab Action Types */
 export const SELECT_TAB = 'SELECT_TAB';
+
+/* Record Action Types */
+export const SET_RECORDS = 'SET_RECORDS';

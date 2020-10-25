@@ -30,7 +30,15 @@ export const clearUser = () => {
 /* Tab Actions */
 export const selectTab = selected => {
   return {
-    type: actionTypes.SELECT_TAB ,
+    type: actionTypes.SELECT_TAB,
     payload: { selected: selected }
+  }
+};
+
+/* Record Actions */
+export const setRecords = records => {
+  return {
+    type: actionTypes.SET_RECORDS,
+    payload: { records: records }
   }
 };
