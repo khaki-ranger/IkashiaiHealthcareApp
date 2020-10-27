@@ -74,7 +74,9 @@ class Element extends React.Component {
     const { name } = event.target;
     let value = event.target.value;
     if (name === 'defecation') {
-      value = (event.target.value === 'true');
+      if (event.target.value !== '' || event.target.value !== undefined) {
+        value = event.target.value;
+      }
     }
     this.setState({ [name]: value, value: value });
   };
@@ -127,14 +129,14 @@ class Element extends React.Component {
     }
 
     return(
-      <Segment style={{ backgroundColor: value !== '' ? '#eee' : '#fff' }}>
+      <Segment style={{ backgroundColor: value === '' || value === undefined ? '#fff' : '#eee' }}>
         <Grid
           columns='equal'
           verticalAlign='middle'
           onClick={this.openModal}
         >
           <Grid.Column width={1}>
-            <Icon name={ value !== '' ? 'check' : 'square outline' } />
+            <Icon name={ value === '' || value === undefined ? 'square outline' : 'check' } />
           </Grid.Column>
           <Grid.Column>
             <Header>{title}</Header>

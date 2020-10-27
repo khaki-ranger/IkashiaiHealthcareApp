@@ -3,18 +3,24 @@ import { connect } from 'react-redux';
 import { setCurrentDate } from '../../actions';
 import Moment from 'react-moment';
 import 'moment/locale/ja';
+import moment from 'moment';
 import { Grid, Header, Button } from 'semantic-ui-react'
 
 class DateController  extends React.Component {
+  state = { isSameDay: true };
 
   changeDate = (direction) => {
     const { currentDate } = this.props;
     let newDate = new Date(currentDate);
     newDate.setDate(currentDate.getDate() + direction);
+    this.setState({
+      isSameDay: moment(newDate).isSame(moment(), 'day')
+    });
     this.props.setCurrentDate(newDate);
   }
 
   render() {
+    const { isSameDay } = this.state;
     const { currentDate } = this.props;
 
     return (
@@ -30,7 +36,11 @@ class DateController  extends React.Component {
           </Header>
         </Grid.Column>
         <Grid.Column textAlign='right'>
-          <Button icon='angle right' onClick={() => this.changeDate(1)} />
+          <Button
+            disabled={isSameDay}
+            icon='angle right'
+            onClick={() => this.changeDate(1)}
+          />
         </Grid.Column>
       </Grid>
     )
@@ -38,7 +48,8 @@ class DateController  extends React.Component {
 };
 
 const mapStateToProps = state => ({
-  currentDate: state.date.currentDate,
+  todaysDate: state.date.todaysDate,
+  currentDate: state.date.currentDate
 });
 
 export default connect(

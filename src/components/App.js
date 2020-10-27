@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import firebase from '../firebase';
-import { setCurrentDate, setRecords } from '../actions';
+import { setTodaysDate, setCurrentDate, setRecords } from '../actions';
 import './App.css';
 
 import TabPanel from './TabPanel';
@@ -18,6 +18,7 @@ class App extends React.Component {
   componentDidMount() {
     const { user } = this.state;
     const now = new Date();
+    this.props.setTodaysDate(now);
     this.props.setCurrentDate(now);
     this.addRecordListener(user.uid);
   }
@@ -62,5 +63,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { setCurrentDate, setRecords }
+  { setTodaysDate, setCurrentDate, setRecords }
 )(App);
